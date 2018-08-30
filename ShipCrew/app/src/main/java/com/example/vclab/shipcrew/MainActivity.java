@@ -128,15 +128,19 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         Fragment fragment = null;
+        String title = getString(R.string.app_name);
+
 
         if (id == R.id.nav_camera) {
             fragment = AtlasMap;
+            title = "선박 내부 지도";
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
             fragment = Manual;
+            title = "승무원 매뉴얼";
 
         } else if (id == R.id.nav_share) {
 
@@ -155,6 +159,10 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_fragment_layout, fragment);
             fragmentTransaction.commit();
+        }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

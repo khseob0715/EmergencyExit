@@ -68,8 +68,8 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
     private GoogleMap map;
     private MapView mapView = null;
 
-    public static Double lat = 36.321655;
-    public static Double lon = 127.378953;
+    public static Double lat = 35.845046;
+    public static Double lon = 127.1314641;
 
 
     private Circle mCircle;
@@ -378,7 +378,7 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
 //            markerOptions.position(nowLocation);
 //            markerOptions.title("now location");
 
-            googleMap.clear();
+   //         googleMap.clear();
 
            // googleMap.addMarker(markerOptions);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(nowLocation));

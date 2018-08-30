@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#6be8ff"
+    android:background="#3cb4ff
+"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,17 +25,17 @@
         <Button
             android:id="@+id/Passenger_Btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Passenger" />
+            android:background="@drawable/passenger_btn" />
 
         <Button
             android:id="@+id/Crew_Btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="CREW" />
+            android:background="@drawable/ship_crew_btn" />
     </LinearLayout>
 </LinearLayout>
