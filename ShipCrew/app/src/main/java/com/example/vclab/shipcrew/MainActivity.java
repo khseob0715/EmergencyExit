@@ -24,6 +24,9 @@ import android.widget.Toast;
 
 import com.example.vclab.shipcrew.Fragment.AtlasMapFragment;
 import com.example.vclab.shipcrew.Fragment.ManualFragment;
+import com.example.vclab.shipcrew.Model.PositionModel;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment AtlasMap;
     private Fragment Manual;
 
+    private DatabaseReference mDatabase;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -46,16 +50,27 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         Intent intent = getIntent();
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 채팅처럼 값 넘기기.
+                Double userlat = AtlasMapFragment.lat;
+                Double userlon = AtlasMapFragment.lon;
+
+                Toast.makeText(getApplicationContext(), "s", Toast.LENGTH_SHORT).show();
+                final PositionModel positionModel = new PositionModel(userlat,userlon);
+
+                Long tsLong = System.currentTimeMillis()/1000;
+                String ts = tsLong.toString();
+
+                mDatabase.child("position").setValue(positionModel);
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

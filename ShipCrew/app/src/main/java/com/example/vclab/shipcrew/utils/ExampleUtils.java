@@ -20,6 +20,7 @@ public class ExampleUtils {
             @Override
             public boolean onLongClick(View view) {
                 shareText(context, manager.getExtraInfo().traceId, "traceId");
+
                 return true;
             }
         });

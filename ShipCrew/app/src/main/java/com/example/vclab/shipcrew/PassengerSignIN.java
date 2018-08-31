@@ -44,6 +44,7 @@ public class PassengerSignIN extends Activity {
         if (loginId != null && loginPwd != null) {  // 자동 로그인
                 Toast.makeText(this, loginId +"님 자동로그인 입니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("crew",false);
                 intent.putExtra("name", loginId);
                 startActivity(intent);
                 finish();
@@ -63,6 +64,7 @@ public class PassengerSignIN extends Activity {
                     autoLogin.commit();
 
                     Intent intent = new Intent(PassengerSignIN.this, MainActivity.class);
+                    intent.putExtra("crew",false);
                     intent.putExtra("name", loginId);
                     startActivity(intent);
                     finish();

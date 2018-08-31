@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.vclab.shipcrew.Model.PositionModel;
 import com.example.vclab.shipcrew.R;
 import com.example.vclab.shipcrew.utils.ExampleUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,6 +38,12 @@ import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.indooratlas.android.sdk.IALocation;
 import com.indooratlas.android.sdk.IALocationListener;
 import com.indooratlas.android.sdk.IALocationManager;
@@ -70,7 +77,6 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
 
     public static Double lat = 35.845046;
     public static Double lon = 127.1314641;
-
 
     private Circle mCircle;
     private Marker mMarker;
@@ -229,6 +235,33 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
         mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.getMapAsync(this);
 
+
+//        // 데이터베이스 읽기 #2. Single ValueEventListener
+//        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Log.d("MainActivity", "Single ValueEventListener : " + snapshot.getValue());
+//
+//                    PositionModel positionModel = (PositionModel) snapshot.getValue();
+//                    LatLng nowLocation = new LatLng(positionModel.getLat(), positionModel.getLon());
+//                    MarkerOptions markerOptions = new MarkerOptions();
+//                    markerOptions.position(nowLocation);
+//                    markerOptions.title("now location");
+//
+//                    map.addMarker(markerOptions);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
+
+
         if (mapView != null) {
             mapView.onCreate(savedInstanceState);
 
@@ -236,7 +269,22 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
             mResourceManager = IAResourceManager.create(getContext());
 
 
+            String text = mIALocationManager.getExtraInfo().traceId;
+            if (text != null)
+                Log.e("TraceId", text);
+            else
+                Log.e("TraceId", "NULL");
+
+
             startListeningPlatformLocations();
+
+
+            text = mIALocationManager.getExtraInfo().traceId;
+            if (text != null)
+                Log.e("TraceId", text);
+            else
+                Log.e("TraceId", "NULL");
+
         }
     }
 
@@ -272,6 +320,13 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
         // start receiving location updates & monitor region changes
         mIALocationManager.requestLocationUpdates(IALocationRequest.create(), mListener);
         mIALocationManager.registerRegionListener(mRegionListener);
+
+
+        String text = mIALocationManager.getExtraInfo().traceId;
+        if (text != null)
+            Log.e("TraceId", text);
+        else
+            Log.e("TraceId", "NULL");
 
 //        // Setup long click to share the traceId
 //        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -311,7 +366,7 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
         map = googleMap;
 
         ShowMyLocaion(lat, lon, map);
-       // StartLocationService();
+        // StartLocationService();
     }
 
     private void StartLocationService() {
@@ -371,6 +426,7 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
+
     private void ShowMyLocaion(Double lat, Double lon, GoogleMap googleMap) {
         try {
             LatLng nowLocation = new LatLng(lat, lon);
@@ -378,11 +434,18 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
 //            markerOptions.position(nowLocation);
 //            markerOptions.title("now location");
 
-   //         googleMap.clear();
+            //         googleMap.clear();
 
-           // googleMap.addMarker(markerOptions);
+            // googleMap.addMarker(markerOptions);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(nowLocation));
             googleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+
+            String text = mIALocationManager.getExtraInfo().traceId;
+            if (text != null)
+                Log.e("TraceId", text);
+            else
+                Log.e("TraceId", "NULL");
+
 
         } catch (IllegalStateException e) {
         }
@@ -451,6 +514,14 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
         } else if (bitmapWidth > MAX_DIMENSION) {
             request.resize(MAX_DIMENSION, 0);
         }
+
+
+        String text = mIALocationManager.getExtraInfo().traceId;
+        if (text != null)
+            Log.e("TraceId", text);
+        else
+            Log.e("TraceId", "NULL");
+
 
         request.into(mLoadTarget);
     }

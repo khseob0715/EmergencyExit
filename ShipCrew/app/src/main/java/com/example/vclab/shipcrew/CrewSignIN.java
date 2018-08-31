@@ -93,6 +93,7 @@ public class CrewSignIN extends Activity {
         if (loginId != null && loginPwd != null) {
             // 자동 로그인.
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("crew",true);
             intent.putExtra("name", loginName);
             startActivity(intent);
             finish();
@@ -130,6 +131,7 @@ public class CrewSignIN extends Activity {
                     //Toast.makeText(CrewSignIN.this, "리스너 실행 완료", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(CrewSignIN.this, MainActivity.class);
+                    intent.putExtra("crew",true);
                     intent.putExtra("name", loginName);
                     startActivity(intent);
                     finish();
