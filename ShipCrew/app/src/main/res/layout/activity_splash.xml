@@ -10,7 +10,7 @@
     tools:context=".Splash">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/splash_view"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:srcCompat="@drawable/cruise" />

@@ -7,6 +7,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,10 +20,15 @@ public class Splash extends AppCompatActivity {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
+    private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        imageView = (ImageView)findViewById(R.id.splash_view);
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.scale);
+        imageView.startAnimation(animation);
 
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
