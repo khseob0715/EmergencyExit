@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -220,6 +221,7 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
 
                         LatLng nowLocation = new LatLng(lat, lon);
                         MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.people_icon));
                         markerOptions.position(nowLocation);
                         markerOptions.title("now location");
 
