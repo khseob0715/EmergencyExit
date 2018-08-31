@@ -204,6 +204,36 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
                     location.getAccuracy(),
                     location.getBearing());
         }
+
+
+        FirebaseDatabase.getInstance().getReference().child("position").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int cnt = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Log.d("MainActivity", "ValueEventListener : " + snapshot.getValue());
+                    if(cnt == 0){
+                        Double lat = (Double)snapshot.getValue();
+                        cnt++;
+                    }else{
+                        Double lon = (Double)snapshot.getValue();
+
+                        LatLng nowLocation = new LatLng(lat, lon);
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(nowLocation);
+                        markerOptions.title("now location");
+
+
+                        map.addMarker(markerOptions);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -236,31 +266,6 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
         mapView.getMapAsync(this);
 
 
-//        // 데이터베이스 읽기 #2. Single ValueEventListener
-//        FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Log.d("MainActivity", "Single ValueEventListener : " + snapshot.getValue());
-//
-//                    PositionModel positionModel = (PositionModel) snapshot.getValue();
-//                    LatLng nowLocation = new LatLng(positionModel.getLat(), positionModel.getLon());
-//                    MarkerOptions markerOptions = new MarkerOptions();
-//                    markerOptions.position(nowLocation);
-//                    markerOptions.title("now location");
-//
-//                    map.addMarker(markerOptions);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
-
-
 
         if (mapView != null) {
             mapView.onCreate(savedInstanceState);
@@ -284,6 +289,8 @@ public class AtlasMapFragment extends Fragment implements View.OnClickListener, 
                 Log.e("TraceId", text);
             else
                 Log.e("TraceId", "NULL");
+
+
 
         }
     }
